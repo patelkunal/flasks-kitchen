@@ -1,0 +1,21 @@
+name: flasky
+dependencies:
+- openssl=1.0.2g=0
+- pip=8.1.1=py35_0
+- python=3.5.1=0
+- readline=6.2=2
+- setuptools=20.3=py35_0
+- sqlite=3.9.2=0
+- tk=8.5.18=0
+- wheel=0.29.0=py35_0
+- xz=5.0.5=1
+- zlib=1.2.8=0
+- pip:
+  - flask==0.10.1
+  - flask-httpauth==3.1.0
+  - flask-sqlalchemy==2.1
+  - itsdangerous==0.24
+  - jinja2==2.8
+  - markupsafe==0.23
+  - sqlalchemy==1.0.12
+  - werkzeug==0.11.5
