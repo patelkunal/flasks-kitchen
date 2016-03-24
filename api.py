@@ -1,14 +1,18 @@
 from flask import Flask, abort, request, jsonify, g, url_for
 from flask_sqlalchemy import SQLAlchemy
 from passlib.apps import custom_app_context as pwd_context
-from itsdangerous import (TimedJSONWebSignatureSerializer
-                          as Serializer, BadSignature, SignatureExpired)
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 from flask_httpauth import HTTPBasicAuth
+from flask_uploads import UploadSet, configure_uploads, DATA, DOCUMENTS
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'python and java'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+app.config['datafile_location'] = "./tmp"
+
+datafiles = UploadSet('datafiles', DATA + DOCUMENTS, default_dest=lambda a: a.config['datafile_location'])
+configure_uploads(app, datafiles)
 
 db = SQLAlchemy(app)
 auth = HTTPBasicAuth()
@@ -73,6 +77,7 @@ def new_user():
 
 
 @app.route('/api/users/<int:id>')
+@auth.login_required
 def get_user(id):
     user = User.query.get(id)
     if not user:
@@ -91,6 +96,16 @@ def get_auth_token():
 @auth.login_required
 def get_resource():
     return jsonify({'data': 'Hello, %s!' % g.user.username})
+
+
+@app.route('/api/upload', methods=['POST'])
+@auth.login_required
+def upload2():
+    print(request.files)
+    print(request.form)
+    if 'filedata' in request.files:
+        folder_name = request.form['name']  # change this with user_id collected from auth_token
+        filename = datafiles.save(request.files['filedata'], folder=folder_name)
 
 
 if __name__ == '__main__':
