@@ -6,6 +6,7 @@ from itsdangerous import (TimedJSONWebSignatureSerializer
 from flask_httpauth import HTTPBasicAuth
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'python and java'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
