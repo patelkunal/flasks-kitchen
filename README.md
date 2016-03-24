@@ -19,7 +19,8 @@ $ curl -i -X POST -H "Content-Type: application/json" -d '{"username":"curl -u m
 
 2. Once user is created you can start passing username:password as basic httpauth params
 $ curl -u kppatel:python -i -X GET http://127.0.0.1:5000/api/resource
-without -u param in request - you will be getting 403
+
+note: without -u param in request - you will be getting 403
 
 3. Don't like username-password to send in request, you can get auth-token
 $ curl -u eyJleHAiOjE0NTg4MDc4NzMsImlhdCI6MTQ1ODgwNzI3MywiYWxnIjoiSFMyNTYifQ.eyJpZCI6MX0.UIBgFXcM3nRqIFxYzxjRWkXOHQtsB9Iq_2hbXrSL530:pass -i http://127.0.0.1:5000/api/resource
