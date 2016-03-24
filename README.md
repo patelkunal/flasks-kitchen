@@ -16,7 +16,7 @@ your dish is ready - its time to attack
 
 * Create user api
 
-$ curl -i -X POST -H "Content-Type: application/json" -d '{"username":"curl -u miguel:python -i -X GET http://127.0.0.1:5000/api/resource","password":"python"}' http://127.0.0.1:5000/api/users
+$ curl -i -X POST -H "Content-Type: application/json" -d '{"username":"kppatel","password":"python"}' http://127.0.0.1:5000/api/users
 
 * Once user is created you can start passing username:password as basic httpauth params
 
