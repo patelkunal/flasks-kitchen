@@ -16,7 +16,7 @@ your dish is ready - its time to attack
 
 * Create user api
 
-$ curl -i -X POST -H "Content-Type: application/json" -d '{"username":"kppatel","password":"python"}' http://127.0.0.1:5000/api/users
+$ curl -i -X POST -H "Content-Type: application/json" -d '{"username":"python"}' http://127.0.0.1:5000/api/users
 
 * Once user is created you can start passing username:password as basic httpauth params
 
@@ -30,5 +30,3 @@ $ curl -u eyJleHAiOjE0NTg4MDc4NzMsImlhdCI6MTQ1ODgwNzI3MywiYWxnIjoiSFMyNTYifQ.eyJ
 * Its time to upload files
 
 $ curl -i -u 'kunal:python' -X POST -F name=kppatel -F filedata=@1030.csv "http://localhost:5000/api/upload"
-
-
