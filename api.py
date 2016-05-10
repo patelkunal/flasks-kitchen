@@ -4,14 +4,25 @@ from passlib.apps import custom_app_context as pwd_context
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 from flask_httpauth import HTTPBasicAuth
 from flask_uploads import UploadSet, configure_uploads, DATA, DOCUMENTS
+import configs
+import platform
+import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'python and java'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
-app.config['datafile_location'] = "./tmp"
+app.config.from_object(configs.Config)
 
-datafiles = UploadSet('datafiles', DATA + DOCUMENTS, default_dest=lambda a: a.config['datafile_location'])
+if os.getenv("MODE", "PROD") is "PROD":
+    app.config.from_object(configs.ProductionConfig)
+else:
+    if platform.system() is "Windows":
+        app.config.from_object(configs.WindowsDevConfigs)
+    else:
+        app.config.from_object(configs.DevConfig)
+
+
+datafiles = UploadSet('datafiles',
+                      DATA + DOCUMENTS,
+                      default_dest=lambda a: a.config['datafile_location'])
 configure_uploads(app, datafiles)
 
 db = SQLAlchemy(app)
